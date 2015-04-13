@@ -1,0 +1,8 @@
+%h1 Questions#index
+%p Find me in app/views/questions/index.html.erb
+- @questions.each do |question|
+  =# link_to question.title, question_path(question)
+  = link_to question.title, question
+  %hr
+
+= paginate @questions

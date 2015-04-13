@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Idea Generator!</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<p align="left"> 
+  <%= link_to "Home", root_path %>
+  |   
+  <%= link_to "All Outstanding Ideas", questions_path %>
+  |
+  <%= link_to "New Idea?", new_question_path %>
+  |
+</p>
+
+  <p align="right">
+    <% if user_signed_in? %>
+      <%# current user is a method from Devise that gives you the user %>
+      <%# object for the currently logged in user %>
+      Welcome <%= current_user.name_display %>,
+      <%= link_to "Favourites", favourites_path %> | 
+      <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to "Log In", new_user_session_path %> |
+      <%= link_to "Register", new_user_registration_path %>
+    <% end %>
+  </p>
+    <hr>
+  <%= flash[:notice] || flash[:alert] %>
+  <hr>
+
+  <div class="container">
+    <%= yield %>
+  </div>
+
+</body>
+</html>

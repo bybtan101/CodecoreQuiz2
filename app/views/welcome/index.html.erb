@@ -1,0 +1,11 @@
+<h>Idea Factory</h1>
+
+<%= form_tag "/contact" do %>
+  <%= text_field_tag :full_name, "", {placeholder: "Full Name", class: "special-text"} %>
+  <br>
+  <%= email_field_tag :email, "", placeholder: "Email" %>
+  <br>
+  <%= text_area_tag :message, "", placeholder: "Your Message" %>
+  <br>
+  <%= submit_tag "Contact Us!" %>
+<% end %>

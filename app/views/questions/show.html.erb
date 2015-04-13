@@ -1,0 +1,75 @@
+<h1><%= @question.title %></h1>
+<p><%= @question.body %>
+<p> View Count: <%= @question.view_count %></p>
+<% if @question.user.present? %>
+  <p>Created By: <%= @question.user.name_display %><p>
+<% end %>
+
+<p>Likes: <%= @question.likes.count %></p>
+<% if @like %>
+  <%= link_to fa_icon("thumbs-up 3x"), question_like_path(@question, @like), method: :delete %>
+<% else %>
+  <%= link_to fa_icon("thumbs-o-up 3x"), question_likes_path(@question), method: :post %>
+<% end %>
+
+<p>Favourited: <%= @question.favourites.count %> times</p>
+<% if @favourite %>
+  <%= link_to fa_icon("star 3x"), question_favourite_path(@question, @favourite), method: :delete %>
+<% else %>
+  <%= link_to fa_icon("star-o 3x"), question_favourites_path(@question), method: :post %>
+<% end %>
+
+<br>
+
+Votes: <%= @question.votes_count %>
+<% if @vote %>
+  <% if @vote.is_up? %>
+    <%= link_to fa_icon("caret-up 5x"), question_vote_path(@question, @vote), method: :delete %>
+    <br>
+    <%= link_to fa_icon("chevron-down 3x"), question_vote_path(@question, @vote, {vote: {is_up: false}}), method: :patch %>
+  <% else %>
+    <%= link_to fa_icon("chevron-up 3x"), question_vote_path(@question, @vote, {vote: {is_up: true}}), method: :patch %>
+    <br>
+    <%= link_to fa_icon("caret-down 5x"), question_vote_path(@question, @vote), method: :delete %>
+  <% end %>
+<% else %>
+  <%= link_to fa_icon("chevron-up 3x"), question_votes_path(@question, {vote: {is_up: true}}), method: :post %>
+  <br>
+  <%= link_to fa_icon("chevron-down 3x"), question_votes_path(@question, {vote: {is_up: false}}), method: :post %>
+<% end %>
+
+
+
+<%= link_to "Edit", edit_question_path(@question) %>
+<%= button_to "Delete", question_path(@question), method: :delete, data: {confirm: "Are you sure?"} %>
+<hr>
+<h2>Submit an answer</h2>
+<% if @answer.errors.any? %>
+  <ul>
+    <% @answer.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%# doing form_for @answer will submit to answers_path %>
+<%# by default which is not what we want. %>
+<%# That's why we must provide the url option %>
+<%= form_for @answer, url: question_answers_path(@question) do |f| %>
+  <%# this is a shortcut for the above: %>
+  <%#= form_for [@question, @answer] do |f| %>
+  <%= f.text_area :body, placeholder: "Put your answer here" %>
+  <br>
+  <%= f.submit "Submit Answer" %> 
+<% end %>
+
+<h2>Answers</h2>
+<% @question.answers.each do |ans| %>
+  <p>
+    <%= ans.body %>
+    <%= button_to "Delete", question_answer_path(@question, ans), method: :delete, data: {confirm: "Are you sure?"} %>
+    <% if ans.user.present? %>
+      <p>Answered by: <%= ans.user.name_display %></p>
+    <% end %>
+  </p>
+  <hr>
+<% end %>

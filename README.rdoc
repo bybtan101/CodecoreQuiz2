@@ -1,0 +1,3 @@
+== README
+
+This is the Awesome Answers project. We will create an app to post questions and post answers to those questions.

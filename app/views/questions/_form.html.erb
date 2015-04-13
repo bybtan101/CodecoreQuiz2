@@ -1,0 +1,35 @@
+<%# if @question has validation errors it will be included %>
+<%# part of the errors objects included in it %>
+<% if @question.errors.any? %>
+  <ul>
+    <% @question.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%# form_for is a view help from Rails that helps %>
+<%# generate a forms in Rails application. %>
+<%# It takes multiple parameters. The first parameter %>
+<%# best be an ActiveRecord object. %>
+<%# From that the form_for will figure out the following: %>
+<%# ACTION: depending on the type of the object. For instance  if the object type is "Question" the action will be "/questions" (questions_path) %>
+<%# METHOD: if the passed ActiveRecord object (@question) is persisted (saved to database) in the database it will use PATCH. If it's not persisted it will use POST %>
+<%= form_for @question do |f| %>
+  <%= f.label :idea %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :notes %>
+  <%= f.text_area :body %>
+  <br>
+  <%# collection_check_boxes is a helper that comes with Rails to build %>
+  <%# a collection of checkboxes. It expects four paramaters. The first one%>
+  <%# is the "name" attribute to be sent to the server. The second parameter %>
+  <%# should be the collection of objects. Usually ActiveRecord objects. %>
+  <%# The third parameter is the value to be sent to the server.%>
+  <%# The fourth paramter is the method to be used for display as label %>
+  <%# for the checkbox. %>
+  <%# http://edgeapi.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-collection_check_boxes %>
+  <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+  <%= f.submit "Submit Idea!"  %>
+<% end %>

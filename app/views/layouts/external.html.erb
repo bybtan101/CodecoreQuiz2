@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AwesomeAnswers</title>
+  <%= stylesheet_link_tag    'external', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  
+<%= link_to "Home", root_path %>
+|   
+<%= link_to("About", about_path, class: "header-link") %>
+| 
+<%= link_to "Contact", contact_url %>
+<hr>
+
+<%= yield %>
+
+</body>
+</html>

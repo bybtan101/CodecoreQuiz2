@@ -1,0 +1,21 @@
+<h1>Idea Factory!</h1>
+
+<p align="right">
+  <%= link_to "Submit New Idea", new_question_path %>
+</p>
+
+<hr>
+  <% @questions.each do |q| %>
+    <ul><p>
+    <p>IDEA: <%= q.title %></p>
+      <br>
+      <p>DETAILS: <%= q.body %></p>
+      <br>
+        <% if q.likes %>
+          <%= link_to fa_icon("thumbs-up 3x"), question_like_path(q, q.likes), method: :delete %>
+        <% else %>
+          <%= link_to fa_icon("thumbs-o-up 3x"), question_likes_path(q), method: :post%>
+       <% end %>
+  </p></ul>
+  <hr>
+<% end %>
